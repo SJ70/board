@@ -3,8 +3,10 @@ package com.example.board.service;
 import com.example.board.dto.CreateCommentRequestDTO;
 import com.example.board.dto.UpdateCommentRequestDTO;
 import com.example.board.model.Comment;
+import com.example.board.model.CommentStatus;
 import com.example.board.model.Member;
 import com.example.board.model.Post;
+import com.example.board.model.PostStatus;
 import com.example.board.repository.CommentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -52,7 +54,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public Comment setDelete(Long id) {
-        return null;
+        Comment comment = this.findById(id);
+        comment.setStatus(CommentStatus.DELETED);
+        commentRepository.save(comment);
+        return comment;
     }
 
 }

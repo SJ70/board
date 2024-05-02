@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Post setDelete(Long id) {
-        Post post = postRepository.findById(id).get();
+        Post post = this.findById(id);
         post.setStatus(PostStatus.DELETED);
         postRepository.save(post);
 

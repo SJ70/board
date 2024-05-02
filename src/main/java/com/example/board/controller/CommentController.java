@@ -7,7 +7,9 @@ import com.example.board.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,13 @@ public class CommentController {
     @PatchMapping
     public ResponseEntity<Comment> updateComment(@RequestBody UpdateCommentRequestDTO requestDTO) {
         Comment comment = commentService.update(requestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(comment);
+        return ResponseEntity.status(HttpStatus.OK).body(comment);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Comment> deleteComment(@PathVariable Long id) {
+        Comment comment = commentService.setDelete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(comment);
     }
 
 }
