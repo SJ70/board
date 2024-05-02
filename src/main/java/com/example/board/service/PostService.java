@@ -8,7 +8,7 @@ public interface PostService {
 
     List<Post> findAll();
     Post findById(Long id);
-    void setDelete(Long id);
     Post create(CreatePostRequestDTO requestDTO);
+    Post setDelete(Long id);
 
 }

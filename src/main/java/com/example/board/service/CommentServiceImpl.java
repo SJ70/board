@@ -26,7 +26,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public Comment create(CreateCommentRequestDTO requestDTO) {
-        System.out.println(requestDTO.memberId());
         Member member = memberService.findById(requestDTO.memberId());
         Post post = postService.findById(requestDTO.postId());
         String body = requestDTO.body();
