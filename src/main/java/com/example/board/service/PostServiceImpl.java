@@ -1,6 +1,7 @@
 package com.example.board.service;
 
 import com.example.board.dto.CreatePostRequestDTO;
+import com.example.board.dto.PostAndCommentsDTO;
 import com.example.board.dto.UpdatePostRequestDTO;
 import com.example.board.model.Comment;
 import com.example.board.model.CommentStatus;
@@ -11,8 +12,8 @@ import com.example.board.repository.CommentRepository;
 import com.example.board.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,18 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public Post findById(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+    }
+
+    @Override
+    @Transactional
+    public PostAndCommentsDTO lookUp(Long id) {
+        Post post = this.findById(id);
+        List<Comment> comments = post.getComments()
+                .stream()
+                .filter(c -> !c.isDeleted())
+                .sorted(Comparator.comparing(Comment::getCreatedAt))
+                .toList();
+        return new PostAndCommentsDTO(post, comments);
     }
 
     @Override

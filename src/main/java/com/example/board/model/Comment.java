@@ -43,4 +43,8 @@ public class Comment {
 
     }
 
+    public boolean isDeleted() {
+        return this.status == CommentStatus.DELETED;
+    }
+
 }
