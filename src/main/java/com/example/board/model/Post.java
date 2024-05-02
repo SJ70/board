@@ -43,4 +43,9 @@ public class Post {
 
     public Post() {
     }
+
+    public boolean isDeleted() {
+        return this.status == PostStatus.DELETED;
+    }
+
 }

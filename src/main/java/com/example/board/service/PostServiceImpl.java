@@ -1,6 +1,7 @@
 package com.example.board.service;
 
 import com.example.board.dto.CreatePostRequestDTO;
+import com.example.board.dto.UpdatePostRequestDTO;
 import com.example.board.model.Comment;
 import com.example.board.model.CommentStatus;
 import com.example.board.model.Member;
@@ -11,6 +12,7 @@ import com.example.board.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,17 @@ public class PostServiceImpl implements PostService {
     public Post create(CreatePostRequestDTO requestDTO) {
         Member member = memberService.findById(requestDTO.memberId());
         Post post = new Post(member, requestDTO.title(), requestDTO.body());
+        return postRepository.save(post);
+    }
+
+    @Override
+    public Post update(UpdatePostRequestDTO requestDTO) {
+        Post post = this.findById(requestDTO.postId());
+        if (post.isDeleted()) {
+            throw new IllegalStateException("삭제된 게시글은 수정할 수 없습니다.");
+        }
+        post.setTitle(requestDTO.title());
+        post.setBody(requestDTO.body());
         return postRepository.save(post);
     }
 
