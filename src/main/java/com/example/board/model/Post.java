@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Data
@@ -26,6 +27,7 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "post")
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();

@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Data
@@ -22,10 +23,12 @@ public class Member {
     @Column(name = "member_name")
     private String name;
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "member")
     @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "member")
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
