@@ -1,6 +1,10 @@
 package com.example.board.service;
 
+import com.example.board.dto.CreatePostRequestDTO;
+import com.example.board.model.Comment;
+import com.example.board.model.Member;
 import com.example.board.model.Post;
+import com.example.board.model.PostStatus;
 import com.example.board.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -12,10 +16,12 @@ import org.springframework.stereotype.Service;
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
+    private MemberService memberService;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, MemberService memberService) {
         this.postRepository = postRepository;
+        this.memberService = memberService;
     }
 
     @Override
@@ -32,7 +38,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Post save(Post post) {
+    public Post create(CreatePostRequestDTO requestDTO) {
+        Member member = memberService.findById(requestDTO.memberId());
+        Post post = new Post(member, requestDTO.title(), requestDTO.body());
         return postRepository.save(post);
     }
 
