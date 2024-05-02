@@ -2,6 +2,7 @@ package com.example.board.service;
 
 import com.example.board.dto.CreatePostRequestDTO;
 import com.example.board.dto.PostAndCommentsDTO;
+import com.example.board.dto.PostPreviewDTO;
 import com.example.board.dto.UpdatePostRequestDTO;
 import com.example.board.model.Comment;
 import com.example.board.model.CommentStatus;
@@ -15,6 +16,9 @@ import jakarta.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,8 +37,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public List<Post> findAll() {
-        return null;
+    public Page<PostPreviewDTO> previewPosts(Pageable pageable) {
+        Page<Post> postPage = postRepository.findAll(pageable);
+        return postPage.map(PostPreviewDTO::new);
     }
 
     @Override
