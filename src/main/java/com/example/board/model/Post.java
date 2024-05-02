@@ -27,7 +27,6 @@ public class Post {
     private Member member;
 
     @OneToMany(mappedBy = "post")
-    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     private String title;

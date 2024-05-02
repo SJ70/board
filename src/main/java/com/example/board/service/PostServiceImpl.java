@@ -2,6 +2,7 @@ package com.example.board.service;
 
 import com.example.board.model.Post;
 import com.example.board.repository.PostRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public Post findById(Long id) {
-        return null;
+        return postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
     }
 
     @Override

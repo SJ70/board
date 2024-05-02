@@ -2,6 +2,7 @@ package com.example.board.service;
 
 import com.example.board.model.Member;
 import com.example.board.repository.MemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public Member findById(Long id) {
-        return memberRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
     }
 
     @Override
