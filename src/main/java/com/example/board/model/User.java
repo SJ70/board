@@ -23,6 +23,9 @@ public class User {
     @OneToMany(mappedBy = "post")
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "reply")
+    private List<Reply> replies = new ArrayList<>();
+
     public User() {}
 
 }

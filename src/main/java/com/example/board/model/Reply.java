@@ -6,40 +6,39 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 
 @Entity
 @Data
-public class Post {
+public class Reply {
 
     @Id
     @GeneratedValue
-    @Column(name = "post_id")
+    @Column(name = "reply_id")
     private Long id;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "reply_id")
-    private List<Reply> replies = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    private String title;
     private String body;
 
-    private PostStatus status = PostStatus.ACTIVATED;
+    private ReplyStatus status = ReplyStatus.ACTIVATED;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Post(User user, String title, String body) {
+    public Reply(User user, Post post, String body) {
         this.user = user;
-        this.title = title;
+        this.post = post;
         this.body = body;
     }
 
-    public Post() {
+    public Reply() {
+
     }
+
 }
