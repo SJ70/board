@@ -11,16 +11,16 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Reply {
+public class Comment {
 
     @Id
     @GeneratedValue
-    @Column(name = "reply_id")
+    @Column(name = "comment_id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
@@ -28,16 +28,16 @@ public class Reply {
 
     private String body;
 
-    private ReplyStatus status = ReplyStatus.ACTIVATED;
+    private CommentStatus status = CommentStatus.ACTIVATED;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Reply(User user, Post post, String body) {
-        this.user = user;
+    public Comment(Member member, Post post, String body) {
+        this.member = member;
         this.post = post;
         this.body = body;
     }
 
-    public Reply() {
+    public Comment() {
 
     }
 

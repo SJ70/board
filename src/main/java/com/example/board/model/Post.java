@@ -22,11 +22,11 @@ public class Post {
     private Long id;
 
     @ManyToOne()
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @OneToMany(mappedBy = "reply_id")
-    private List<Reply> replies = new ArrayList<>();
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
 
     private String title;
     private String body;
@@ -34,8 +34,8 @@ public class Post {
     private PostStatus status = PostStatus.ACTIVATED;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Post(User user, String title, String body) {
-        this.user = user;
+    public Post(Member member, String title, String body) {
+        this.member = member;
         this.title = title;
         this.body = body;
     }

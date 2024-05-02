@@ -11,26 +11,26 @@ import lombok.Data;
 
 @Entity
 @Data
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "member_name")
     private String name;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "reply")
-    private List<Reply> replies = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Comment> comments = new ArrayList<>();
 
-    public User(String name) {
+    public Member(String name) {
         this.name = name;
     }
 
-    public User() {}
+    public Member() {}
 
 }
