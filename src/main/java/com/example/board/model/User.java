@@ -18,7 +18,8 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    private String username;
+    @Column(name = "username")
+    private String name;
 
     @OneToMany(mappedBy = "post")
     private List<Post> posts = new ArrayList<>();
