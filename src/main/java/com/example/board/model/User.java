@@ -27,6 +27,10 @@ public class User {
     @OneToMany(mappedBy = "reply")
     private List<Reply> replies = new ArrayList<>();
 
+    public User(String name) {
+        this.name = name;
+    }
+
     public User() {}
 
 }
