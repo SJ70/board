@@ -1,5 +1,6 @@
 package com.example.board.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,9 +23,11 @@ public class Member {
     private String name;
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     public Member(String name) {
